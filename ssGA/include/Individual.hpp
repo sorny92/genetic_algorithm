@@ -9,11 +9,10 @@
 
 class Individual {
 public:
-    Individual(size_t n_alelles) : chromosomes_(n_alelles) {
+    explicit Individual(size_t n_alelles) : chromosomes_(n_alelles) {
 
     }
 
-private:
     Chromosome chromosomes_;
     double fitness_{0.0};
 
