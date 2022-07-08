@@ -9,10 +9,15 @@
 #include <bitset>
 #include <algorithm>
 #include <iostream>
+#include <utility>
 
 class Chromosome {
 public:
     explicit Chromosome(size_t n_chromosomes);
+
+    explicit Chromosome(std::vector<bool> alleles) {
+        alleles_ = std::move(alleles);
+    }
 
     friend bool operator==(const Chromosome &l, const Chromosome &r) {
         return l.alleles_ == r.alleles_;
