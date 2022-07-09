@@ -35,7 +35,7 @@ public:
         }
 
         auto accumulator{0.0};
-        for_each(std::execution::seq,pairs.begin(), pairs.end(), [&](const auto &pair) {
+        for_each(std::execution::seq, pairs.begin(), pairs.end(), [&](const auto &pair) {
             auto i = pair.first;
             auto j = pair.second;
             if (i != j) {
@@ -56,12 +56,7 @@ public:
 
     std::map<size_t, size_t> assign_hubs(const Individual &individual) {
         std::map<size_t, size_t> assigned_hubs;
-        std::vector<size_t> hubs_indexes;
-        for (auto i = 0; i < individual.chromosomes_.size(); i++) {
-            if (individual.chromosomes_.get_allele(i)) {
-                hubs_indexes.emplace_back(i);
-            }
-        }
+        std::vector<size_t> hubs_indexes = individual.chromosomes_.get_genome();
         for (auto node_idx = 0; node_idx < n_nodes_; ++node_idx) {
             auto lowest_cost = std::numeric_limits<double>::max();
             auto lowest_hub_idx = std::optional<size_t>();

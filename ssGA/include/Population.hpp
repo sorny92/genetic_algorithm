@@ -43,7 +43,7 @@ public:
 
     void print_statistics() const {
         fmt::print("Iter {}: Best: {}->{:.3f}  || Worst: {}->{:.3f}  || Avg_fitness: {:.3f}  || Best_genome: {}\n", iteration_, *best_,
-                   individuals_[*best_].fitness, *worst_, individuals_[*worst_].fitness, average_fitness, get_best_performer().chromosomes_.get_genome());
+                   individuals_[*best_].fitness, *worst_, individuals_[*worst_].fitness, average_fitness, get_best_performer().chromosomes_.get_genome_as_string());
     }
 
     void update_statistics() {

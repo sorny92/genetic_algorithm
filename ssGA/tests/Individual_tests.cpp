@@ -7,9 +7,9 @@
 
 TEST_CASE("Check mutations can happen") {
     Individual individual(4);
-    individual.chromosomes_.print();
+    std::cout << individual.chromosomes_.get_genome_as_string() << std::endl;
     auto before_mutation = individual.chromosomes_;
-    individual.chromosomes_.mutate(0.5);
-    individual.chromosomes_.print();
+    individual.chromosomes_.mutate(0.25);
+    std::cout << individual.chromosomes_.get_genome_as_string() << std::endl;
     REQUIRE(before_mutation != individual.chromosomes_);
 }

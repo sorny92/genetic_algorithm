@@ -9,14 +9,14 @@
 
 class Chromosome {
 public:
-    explicit Chromosome(size_t n_chromosomes);
+    explicit Chromosome(size_t n_genes);
 
-    explicit Chromosome(std::vector<bool> alleles) {
-        alleles_ = std::move(alleles);
+    explicit Chromosome(std::vector<size_t> genes) {
+        genes_ = std::move(genes);
     }
 
     friend bool operator==(const Chromosome &l, const Chromosome &r) {
-        return l.alleles_ == r.alleles_;
+        return l.genes_ == r.genes_;
     }
 
     friend bool operator!=(const Chromosome &l, const Chromosome &r) {
@@ -24,47 +24,55 @@ public:
     }
 
     void mutate(double probability) {
-        for_each(alleles_.begin(), alleles_.end(), [&](decltype(alleles_)::reference allele) {
-            std::uniform_int_distribution<> distr(0, 99);
-            if (distr(generator) < probability*100) {
-                allele = !allele;
+        for_each(genes_.begin(), genes_.end(), [&](size_t &gen) {
+            std::uniform_int_distribution<> prob(0, 99);
+            if (prob(generator) < probability * 100) {
+                gen = generate_random_gene();
             }
         });
     }
 
-    void set_allele(size_t index, bool value) {
-        alleles_[index] = value;
+    int generate_random_gene() {
+        std::uniform_int_distribution<> distr(0, 24);
+        int potential_gen{-1};
+        do {
+            potential_gen = distr(generator);
+        } while (std::ranges::find(genes_, potential_gen) != genes_.end());
+        return potential_gen;
     }
 
-    [[nodiscard]] bool get_allele(size_t index) const {
-        return alleles_[index];
+    void set_allele(size_t index, int value) {
+        genes_[index] = value;
+    }
+
+    [[nodiscard]] size_t get_allele(size_t index) const {
+        return genes_[index];
     }
 
     [[nodiscard]] size_t size() const {
-        return alleles_.size();
+        return genes_.size();
     }
 
-    std::string get_genome() {
+    std::string get_genome_as_string() {
         std::stringstream ss;
-        for_each(alleles_.begin(), alleles_.end(), [&](bool allele) {
-            ss << (allele ? '1' : '0');
+        for_each(genes_.begin(), genes_.end(), [&](size_t allele) {
+            ss << allele << ' ';
         });
         return ss.str();
     }
 
+    [[nodiscard]] std::vector<size_t> get_genome() const {
+        return genes_;
+    }
+
 private:
-    std::vector<bool> alleles_;
+    std::vector<size_t> genes_;
     static std::mt19937 generator;
 
 
-
-    static std::vector<bool> random_bitset(size_t size, double p = 0.5) {
-        std::vector<bool> bits(size);
-        std::bernoulli_distribution d(p);
-
+    void fill_with_random_genome(size_t size) {
         for (int n = 0; n < size; ++n) {
-            bits[n] = d(generator);
+            genes_.emplace_back(generate_random_gene());
         }
-        return bits;
     }
 };
