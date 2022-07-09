@@ -8,9 +8,9 @@
 
 class pHub {
 public:
-    explicit pHub(std::vector<std::vector<double>> dataset, double alpha) : data_(std::move(dataset)),
-                                                                            n_nodes_(sqrt(dataset.size()),
-                                                                                     alpha_(alpha)) {
+    explicit pHub(std::vector<std::vector<double>> dataset, double alpha=1.0) : data_(std::move(dataset)),
+                                                                            n_nodes_(sqrt(dataset.size())),
+                                                                            alpha_(alpha) {
         for (auto i = 0; i < n_nodes_; ++i) {
             for (auto j = i; j < n_nodes_; ++j) {
                 flow_accum += w(i, j);
@@ -91,6 +91,7 @@ private:
     const size_t n_nodes_;
     double flow_accum;
     const double alpha_;
+
     std::vector<std::vector<double>> data_{};
     std::map<size_t, size_t> assigned_hubs_;
 

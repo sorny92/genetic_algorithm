@@ -5,8 +5,6 @@
 #include <queue>
 #include "Individual.hpp"
 
-auto cmp = [](const Individual &left, const Individual &right) { return (left.fitness_) < (right.fitness_); };
-
 class Population {
 public:
     Population(size_t n_individuals, size_t n_chromosomes) : individuals_(n_individuals, Individual(n_chromosomes)),
@@ -21,9 +19,16 @@ public:
         return best_;
     }
 
-    void kill_and_replace_worst_performer() {
+    Individual binary_tournament() {
+        std::vector<Individual> out;
+        std::sample(individuals_.begin(), individuals_.end(), std::back_inserter(out),
+                    2, std::mt19937{std::random_device{}()});
+        return (out[0].fitness > out[1].fitness) ? out[0] : out[1];
+    }
+
+    void kill_and_replace_worst_performer(const Individual& new_individual) {
         auto index = get_worst_performer();
-        individuals_[index] = Individual(n_chromosomes_);
+        individuals_[index] = new_individual;
     }
 
 private:

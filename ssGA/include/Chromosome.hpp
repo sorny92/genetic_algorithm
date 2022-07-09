@@ -22,11 +22,11 @@ public:
         return !(l == r);
     }
 
-    void mutate() {
-        for_each(alleles_.begin(), alleles_.end(), [this](decltype(alleles_)::reference allele) {
+    void mutate(double probability) {
+        for_each(alleles_.begin(), alleles_.end(), [&](decltype(alleles_)::reference allele) {
             //TODO: This is not real random.
-            auto random_number = (rand() % 100) / 100.0f;
-            if (random_number < (1.0f / alleles_.size())) {
+            std::uniform_int_distribution<> distr(0, 99);
+            if (distr(generator) < probability) {
                 allele = !allele;
             }
         });
@@ -53,6 +53,7 @@ public:
 
 private:
     std::vector<bool> alleles_;
+    std::mt19937 generator = std::mt19937{std::random_device{}()};
 
     static std::vector<bool> random_bitset(size_t size, double p = 0.5) {
         std::vector<bool> bits(size);
