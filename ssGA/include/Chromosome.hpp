@@ -5,6 +5,7 @@
 #include <algorithm>
 #include <iostream>
 #include <utility>
+#include <sstream>
 
 class Chromosome {
 public:
@@ -24,9 +25,8 @@ public:
 
     void mutate(double probability) {
         for_each(alleles_.begin(), alleles_.end(), [&](decltype(alleles_)::reference allele) {
-            //TODO: This is not real random.
             std::uniform_int_distribution<> distr(0, 99);
-            if (distr(generator) < probability) {
+            if (distr(generator) < probability*100) {
                 allele = !allele;
             }
         });
@@ -44,25 +44,26 @@ public:
         return alleles_.size();
     }
 
-    void print() {
+    std::string get_genome() {
+        std::stringstream ss;
         for_each(alleles_.begin(), alleles_.end(), [&](bool allele) {
-            std::cout << (allele ? '1' : '0');
+            ss << (allele ? '1' : '0');
         });
-        std::cout << std::endl;
+        return ss.str();
     }
 
 private:
     std::vector<bool> alleles_;
-    std::mt19937 generator = std::mt19937{std::random_device{}()};
+    static std::mt19937 generator;
+
+
 
     static std::vector<bool> random_bitset(size_t size, double p = 0.5) {
         std::vector<bool> bits(size);
-        std::random_device rd;
-        std::mt19937 gen(rd());
         std::bernoulli_distribution d(p);
 
         for (int n = 0; n < size; ++n) {
-            bits[n] = d(gen);
+            bits[n] = d(generator);
         }
         return bits;
     }

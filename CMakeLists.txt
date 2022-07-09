@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.22)
 project(p_hub_genetic_algorithm CXX)
 
-
+add_subdirectory(3rd_party/fmt)
 add_subdirectory(ssGA)
 add_subdirectory(pHub)
 

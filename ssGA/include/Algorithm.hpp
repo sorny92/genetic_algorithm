@@ -15,10 +15,22 @@ public:
                                         probability_mutation_(probability_mutation) {
     }
 
+    void fit_population(){
+        for(auto& i: population.individuals()){
+            i.fitness = problem_.calculate_fitness(i);
+            //fmt::print("Fitness: {:.3f}\t - ", i.fitness);
+            //i.chromosomes_.print();
+        }
+        population.update_statistics();
+    }
+
+    void print_statistics() const {
+        population.print_statistics();
+    }
+
     void next_step() {
         auto new_individual = single_point_crossover(population.binary_tournament(), population.binary_tournament());
         new_individual.chromosomes_.mutate(probability_mutation_);
-        new_individual.fitness = problem_.calculate_fitness(new_individual);
         population.kill_and_replace_worst_performer(new_individual);
     }
 
