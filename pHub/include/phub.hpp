@@ -5,20 +5,21 @@
 #include <map>
 #include <optional>
 #include "Individual.hpp"
+#include <execution>
 
 class pHub {
 public:
-    explicit pHub(std::vector<std::vector<double>> dataset, double alpha=1.0) : data_(std::move(dataset)),
-                                                                            n_nodes_(sqrt(dataset.size())),
-                                                                            alpha_(alpha) {
+    explicit pHub(std::vector<std::vector<double>> dataset, double alpha = 1.0) : data_(std::move(dataset)),
+                                                                                  n_nodes_(sqrt(dataset.size())),
+                                                                                  alpha_(alpha) {
         for (auto i = 0; i < n_nodes_; ++i) {
-            for (auto j = i; j < n_nodes_; ++j) {
+            for (auto j = 0; j < n_nodes_; ++j) {
                 flow_accum += w(i, j);
             }
         }
-        for (auto &row: data_) {
-            row[2] /= flow_accum;
-        }
+        for_each(std::execution::par_unseq, data_.begin(), data_.end(), [this](auto &v) {
+            v[2] /= flow_accum;
+        });
     }
 
     double calculate_fitness(const Individual &individual) {
@@ -26,16 +27,22 @@ public:
         if (assigned_hubs.empty()) {
             return std::numeric_limits<double>::max();
         }
-        auto accumulator{0.0};
+        std::vector<std::pair<size_t, size_t>> pairs;
         for (auto i = 0; i < n_nodes_; ++i) {
             for (auto j = i; j < n_nodes_; ++j) {
-                if (i == j) {
-                    continue;
-                }
-                auto in_hub = assigned_hubs[i];
-                auto out_hub = assigned_hubs[j];
+                pairs.emplace_back(i, j);
+            }
+        }
 
-                auto inflow = w(i, in_hub);
+        auto accumulator{0.0};
+        for_each(std::execution::seq,pairs.begin(), pairs.end(), [&](const auto &pair) {
+            auto i = pair.first;
+            auto j = pair.second;
+            if (i != j) {
+                auto in_hub = (assigned_hubs.find(i) == assigned_hubs.end()) ? i : assigned_hubs[i];
+                auto out_hub = (assigned_hubs.find(j) == assigned_hubs.end()) ? j : assigned_hubs[j];
+
+                auto inflow = w(i, j);
 
                 auto in_cost = c(i, in_hub);
                 auto hub2hub_cost = c(in_hub, out_hub);
@@ -43,7 +50,7 @@ public:
 
                 accumulator += inflow * (in_cost + alpha_ * hub2hub_cost + out_cost);
             }
-        }
+        });
         return accumulator;
     }
 

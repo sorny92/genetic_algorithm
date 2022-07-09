@@ -45,7 +45,7 @@ private:
     Individual single_point_crossover(const Individual &i1, const Individual &i2) {
         {
             std::uniform_int_distribution<> distr(0, 99);
-            if (distr(generator) < probability_crossover_ * 100) {
+            if (distr(generator) > probability_crossover_ * 100) {
                 return (distr(generator) < 50) ? i1 : i2;
             }
         }
