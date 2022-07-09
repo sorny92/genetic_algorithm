@@ -1,9 +1,4 @@
-//
-// Created by esteve on 02/07/22.
-//
-
-#ifndef P_HUB_GENETIC_ALGORITHM_INDIVIDUAL_H
-#define P_HUB_GENETIC_ALGORITHM_INDIVIDUAL_H
+#pragma once
 
 #include <utility>
 
@@ -22,5 +17,3 @@ public:
     double fitness_{0.0};
 
 };
-
-#endif //P_HUB_GENETIC_ALGORITHM_INDIVIDUAL_H

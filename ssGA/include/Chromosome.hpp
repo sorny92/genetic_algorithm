@@ -1,9 +1,4 @@
-//
-// Created by esteve on 02/07/22.
-//
-
-#ifndef P_HUB_GENETIC_ALGORITHM_CHROMOSOME_H
-#define P_HUB_GENETIC_ALGORITHM_CHROMOSOME_H
+#pragma once
 
 #include <random>
 #include <bitset>
@@ -71,5 +66,3 @@ private:
         return bits;
     }
 };
-
-#endif //P_HUB_GENETIC_ALGORITHM_CHROMOSOME_H

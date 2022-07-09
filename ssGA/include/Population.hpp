@@ -1,9 +1,4 @@
-//
-// Created by esteve on 02/07/22.
-//
-
-#ifndef P_HUB_GENETIC_ALGORITHM_POPULATION_H
-#define P_HUB_GENETIC_ALGORITHM_POPULATION_H
+#pragma once
 
 #include <cstddef>
 #include <vector>
@@ -37,5 +32,3 @@ private:
     size_t worst_{0};
     std::vector<Individual> individuals_;
 };
-
-#endif //P_HUB_GENETIC_ALGORITHM_POPULATION_H

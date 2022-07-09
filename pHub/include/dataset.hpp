@@ -1,10 +1,4 @@
-//
-// Created by esteve on 07/07/22.
-//
-
-#ifndef P_HUB_GENETIC_ALGORITHM_DATASET_HPP
-#define P_HUB_GENETIC_ALGORITHM_DATASET_HPP
-
+#pragma once
 
 const std::vector<std::vector<double>> map = {{1 - 1,  1 - 1,  0,      0},
                                               {1 - 1,  2 - 1,  6469,   576.9631},
@@ -631,5 +625,3 @@ const std::vector<std::vector<double>> map = {{1 - 1,  1 - 1,  0,      0},
                                               {25 - 1, 23 - 1, 4951,   2321.873},
                                               {25 - 1, 24 - 1, 6237,   813.5513},
                                               {25 - 1, 25 - 1, 0,      0}};
-
-#endif //P_HUB_GENETIC_ALGORITHM_DATASET_HPP

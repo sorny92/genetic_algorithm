@@ -1,9 +1,4 @@
-//
-// Created by esteve on 07/07/22.
-//
-
-#ifndef P_HUB_GENETIC_ALGORITHM_PHUB_HPP
-#define P_HUB_GENETIC_ALGORITHM_PHUB_HPP
+#pragma once
 
 #include <utility>
 #include <vector>
@@ -104,5 +99,3 @@ private:
     }
 
 };
-
-#endif //P_HUB_GENETIC_ALGORITHM_PHUB_HPP
