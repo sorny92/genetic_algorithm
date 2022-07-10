@@ -13,6 +13,16 @@
     \maketitle
     \newpage
 
+    %  Este trabajo propone utilizar un GA básico para entender la importancia de los operadores como
+    %  mutación y cruce en los resultados finales del algoritmo. Para ello el alumno debe descargar una
+    %  implementación básica en Java desde http://neo.lcc.uma.es/software/ssga/index.php y pogramar
+    %  la función de fitness correspondiente al problema del phub con las instancias tipo 1 más simples
+    %  descargables desde http://people.brunel.ac.uk/~mastjjb/jeb/orlib/phubinfo.html. El alumno/a
+    %  deberá ejecutar el algoritmo para varios valores de probabilidad de cruce y mutación diferentes.
+    %  Realizará un informe escrito de un máximo de diez páginas escritas en Latex donde se incluyan
+    %  estudios estadísticos de al menos 30 ejecuciones por cada combinación de parámetros, mostrando
+    %  en tablas de resultados y en gráficas el comportamiento del algoritmo cuando se detiene por
+    %  número máximo de evaluaciones y por encontrar el óptimo (dos estudios separados).
 
     \section{Introduction}
     In this work I develop an algorithm aiming to solve the single hub location problem.
@@ -21,13 +31,20 @@
 
     In this work the optimal solution for the dataset provided in the original paper\cite{OKELLY1987393} is found.
 
-    There is, also, a study of hyper-parameters selection to achieve the solution in the least resource intensive way.
+    There is, also, a study of hyperparameters selection to achieve the solution in the least resource intensive way.
+
+    The code used in this work can be found here \url{https://github.com/sorny92/genetic_algorithm}.
 
 
     \section{\textit{p-Hub} problem}
 
 
+
     \section{Method}
+    The implementation of this solution is based on the code developed by E. Alba here \url{https://neo.lcc.uma
+.es/software/ssga/index.php}.
+    This software is based on Java but the implementation used in this work is reimplemented in C++ to know more in
+    deep how to develop this kind of systems.
 
 
     \section{Results}

@@ -1,2 +1,8 @@
 .idea/
 cmake-build-*/
+.ipynb_checkpoints/
+*.pickle
+
+
+docs/generated/*
+!docs/generated/ssGA_phub.pdf
