@@ -16,11 +16,11 @@ public:
     }
 
     void fit_population(){
-        for(auto& i: population.individuals()){
+        for_each(std::execution::par_unseq, population.individuals().begin(), population.individuals().end(), [this](auto &i) {
             i.fitness = problem_.calculate_fitness(i);
             //fmt::print("Fitness: {:.3f}\t - ", i.fitness);
             //i.chromosomes_.print();
-        }
+        });
         population.update_statistics();
     }
 

@@ -13,11 +13,11 @@ public:
                                                                                   n_nodes_(sqrt(dataset.size())),
                                                                                   alpha_(alpha) {
         for (auto i = 0; i < n_nodes_; ++i) {
-            for (auto j = 0; j < n_nodes_; ++j) {
+            for (auto j = i; j < n_nodes_; ++j) {
                 flow_accum += w(i, j);
             }
         }
-        for_each(std::execution::par_unseq, data_.begin(), data_.end(), [this](auto &v) {
+        for_each(std::execution::seq, data_.begin(), data_.end(), [this](auto &v) {
             v[2] /= flow_accum;
         });
     }
