@@ -6,7 +6,7 @@
 #include "pHub/include/dataset.hpp"
 
 int main(int argc, char *argv[]) {
-    // args: n_iter individuals gnome_length prob_cross prob_muta
+    // args: n_iter individuals genome_length prob_cross prob_muta
     for(auto i=1;i<argc; ++i) {
         std::cout << argv[i] << " ";
     }
