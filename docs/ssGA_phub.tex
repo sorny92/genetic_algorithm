@@ -24,12 +24,14 @@
     %  en tablas de resultados y en gráficas el comportamiento del algoritmo cuando se detiene por
     %  número máximo de evaluaciones y por encontrar el óptimo (dos estudios separados).
 
+
     \section{Introduction}
     In this work I develop an algorithm aiming to solve the single hub location problem.
     Due to the nature of the hub location problem, the use of meta-heuristics can simplify the process of finding an
     optimal solution.
 
     In this work the optimal solution for the dataset provided in the original paper\cite{OKELLY1987393} is found.
+    The solution for 2, 3 or 4 hubs is studied but this can this system can be expanded for more.
 
     There is, also, a study of hyperparameters selection to achieve the solution in the least resource intensive way.
 
@@ -37,7 +39,40 @@
 
 
     \section{\textit{p-Hub} problem}
+    A common problem to deal with in logistics is the hub location problem.
+    A hub is a location that serves as a point of connections for different locations.
+    If a person needs to go from A to B by plane is probable that there's no direct connection between this
+    points so the user needs to traver to a hub that will connect them to the point B or a hub that is connected to
+    the point B.
+    Hubs have the purpose of connecting non-hub locations.
+    Normally these hubs come with a cost, but they also bring economy of scales so transporting between hubs can be
+    beneficial.
 
+    Knowing where to create a hub is important because it will help to decrease the cost of transportation optimizing
+    the flows and inherit costs.
+
+    To define the problem we need to consider a series of nodes and each one of them has a flow that needs to go from
+    the node i to the node j.
+    This travel from node to node has a cost.
+    So the goal to solve the problem is to minimize the cost of the whole network.
+
+    One of the key elements of this problem is that is not possible to have an optimal solution in an acceptable time
+    due to the high combinatorial characteristics of it.
+
+    There are several variants of this problem.
+    For example, the single hub problem which considers there is only one hub to allocate.
+    Then you have the p-hub which you have a \textit{p} number of hubs to allocate where every non-hub is connected
+    to only one hub.
+    These connections could be set through an optimal policy, so it's another part of the problem to optimize or could
+    be allocated by distance/cost.
+    There are more variants with multiple connections from non-hubs to different hubs, variants with limitations in
+    the hub flows, variants with costs on setting up links, etc\ldots
+
+
+    In this essay we will focus on the p-hub problem where the assignation of non-hubs to hubs is done through cost
+    minimization.
+    The code in this system allows to modify an \(\alpha\) value to proportionally decrease the cost of hub to hub
+    connection but because we use the minimum cost allocation this value does not change the result.
 
 
     \section{Method}
