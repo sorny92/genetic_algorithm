@@ -75,14 +75,86 @@
     connection but because we use the minimum cost allocation this value does not change the result.
 
 
+    % Maybe add the min formula here?
+
+
     \section{Method}
-    The implementation of this solution is based on the code developed by E. Alba here \url{https://neo.lcc.uma
-.es/software/ssga/index.php}.
-    This software is based on Java but the implementation used in this work is reimplemented in C++ to know more in
-    deep how to develop this kind of systems.
+
+    \subsection{Steady stage genetic algorithm}
+    The implementation of this solution is based on the code developed by E. Alba here
+    \url{https://neo.lcc.uma.es/software/ssga/index.php}.
+    This software package is developed with Java but the implementation used in this work is reimplemented in C++ to
+    know more in deep how to develop this kind of systems.
+
+    To solve the hub location problem I implemented a steady state genetic algorithm.
+    This type of genetic algorithms work with a defined sized population of individuals.
+
+    In every iteration the fitness of each individual is calculated, then we apply selection of genetic operators to
+    the population.
+
+    In this case, two individuals are selected through binary tournament, which means that for every tournament
+    there are two randomly selected individuals and the one with the best fitness is returned.
+
+    Then a single point crossover operator is applied.
+    SPC operator takes two individuals then based on a given probability this operator will be applied, in case of it
+    being applied an individual will be returned that will be a crossover of the genomes of both individuals.
+    This crossover point is selected randomly.
+    In the contrary case where the crossover is not going to be done, one of the input individuals is selected
+    randomly as the returned.
+
+    Once we have an individual from SPC the mutation operator is applied, this will mutate each gene of the genome
+    based on a given probability.
+
+    This individual that is received from the mutation operator will substitute the worst performer of the whole
+    population.
+
+    \subsection{Genome design}
+    In the previous section the ssGA is explained, in this section the genome encoding is explained.
+
+    There are several ways to encode the genome.
+    Originally in this work it was implemented as a binary vector where there were \textit{p} number of bits as total
+    number of nodes in the problem.
+    This approach allows to fit the GA to the problem but it makes limiting the number of hubs problematic.
+
+    The second version uses an integer encoded vector where there are \textit{p} genes as the number of hubs to be
+    allocated in the graph.
+    This version is much better because it limits the amount of hubs that can be assigned in a natural way.
+    There's only a need to check that the values are not repeated in each gene.
+    Doing it this way all the information to solve the problem is encoded because the value of the integer will
+    indicate the index of the hubs and then the assignement of non-hubs happens thought nearest cost allocation.
+
+    Another potential version is a two-allele integer gene encoding.
+    This could be really useful to solve a single-HLP without nearest hub assignment because every gene will set in
+    the first allele if it is a hub and the second to which hub is linked.
+
+
+    \section{Experiments}
+
+    In this work the number of iterations, individuals, length of the genome, crossover probability and the
+    probability of mutation can be configured.
+    So the experiment has been set to do 500 iterations in each run and 30 runs by set of parameters, then there's a
+    grid generation for the next values:
+    \begin{itemize}
+        \item Number of individuals: [5, 10, 25]
+        \item Genome length (number of hubs): [2, 3, 4]
+        \item Probability of crossover: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+        \item Probability of mutation: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
+    \end{itemize}
+
+    A script is written to run all this experiments and every run will have the best performer, worst performer and
+    average fitness.
+    Also, the genome of the best performer, all of this per each iteration.
+
+    In the next section there's an analysis of the results
 
 
     \section{Results}
+
+    \subsection{Performance}
+    Other than learning and exploration, the implementation in C++ bring an edge of performance to be able to run
+    plenty of experiments.
+    This implementation has parallel run for the fitness calculation which in the machine used for this work provided
+    around x10 more performance.
 
 
     \section{Conclusion}
