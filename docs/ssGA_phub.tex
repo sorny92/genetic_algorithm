@@ -3,6 +3,9 @@
 \usepackage[utf8]{inputenc}
 \usepackage{hyperref}
 
+\usepackage{graphicx}
+\graphicspath{ {assets/} }
+
 % Packages
 \usepackage{amsmath}
 
@@ -121,9 +124,9 @@
     This version is much better because it limits the amount of hubs that can be assigned in a natural way.
     There's only a need to check that the values are not repeated in each gene.
     Doing it this way all the information to solve the problem is encoded because the value of the integer will
-    indicate the index of the hubs and then the assignement of non-hubs happens thought nearest cost allocation.
+    indicate the index of the hubs and then the assignment of non-hubs happens thought nearest cost allocation.
 
-    Another potential version is a two-allele integer gene encoding.
+    Another potential version is a two-allele integer gene encoding.~\cite{Capacitated_allo_Zorica}
     This could be really useful to solve a single-HLP without nearest hub assignment because every gene will set in
     the first allele if it is a hub and the second to which hub is linked.
 
@@ -140,6 +143,7 @@
         \item Probability of crossover: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
         \item Probability of mutation: [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
     \end{itemize}
+    The parameter selections is inspired from the work at~\cite{Zhou2016/09}.
 
     A script is written to run all this experiments and every run will have the best performer, worst performer and
     average fitness.
@@ -147,8 +151,74 @@
 
     In the next section there's an analysis of the results
 
+    \newpage
+
 
     \section{Results}
+    In this section I show the results of the experiments.
+    The analysis takes into account the parameters selected and which ones would be ideal for this use case.
+    Then analyze how the influence to achieve an optimal solutions.
+    Lastly, how this parameters affect the time to converge to an optimal solution.
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{no_cross_no_mut}
+        \caption{When the probability of crossover or mutation is 0 there's no possibility of improvement.}
+        \label{fig:prob0}
+    \end{figure}
+
+    Depending on the probability values selected for crossover or mutation the speed to achieve an optimal solution
+    will be different.
+    As it can be seen in Figure~\ref{fig:prob0}, due to not being able to generate new different genomes
+    there's no improvement in the fitness metric.
+
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{max_cross_mut}
+        \caption{When the probability of crossover or mutation is 1 the variability of final results is big due to
+        the big pool of different genomes.}
+        \label{fig:prob1}
+    \end{figure}
+
+    In the opposite direction of Figure~\ref{fig:prob0}, we can observe in Figure~\ref{fig:prob1} when the crossover
+    and mutation probability is at the maximum the variability increases fast so the system is able to achieve a
+    bigger variability of results.
+
+    Another interesting observation in Figure~\ref{fig:prob1} is the different fitness values that are achieved based on
+    the number of hubs.
+    As it should be obvious the more hubs you have the more interconnected is the network so the lower the cost is.
+    This is why having hubs of zero cost does not make sense because your ideal fitness would be to make a hub in
+    every node.
+
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{sweep_values_get_best_fitness}
+        \caption{In this figure a sweep from 0 to 1 of the two variables can be seen.}
+        \label{fig:sweep_best}
+    \end{figure}
+
+    In Figure~\ref{fig:sweep_best} it can be seen that with a bigger value of probability the spread in the final
+    results is bigger.
+    This is due to the big changes that happen to the genome.
+    Every iteration a new individual with a lot of mutations is added, and it has been created from random
+    individuals with ver diverse genome keeping the population with a wide spread of genomes.
+
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{sweep_values_get_avg_fitness}
+        \caption{Similar graph as Figure 3 but in this case the average fitness of the best run for that set of
+        values is plotted.
+        The intensity of colour indicates a higher probability of crossover.
+        Left to right an increased probability
+        of mutation.}
+        \label{fig:sweep_avg}
+    \end{figure}
+
+    In Figure~\ref{fig:sweep_avg} We can observe that high probability values increase the variability and so it does
+    the average value so achieving an optimal result takes much longer.
+    Based on the data, a probability of mutation around 0.2 is the best to achieve a fast optimal result.
+    Then applying crossover with a probability between 0.4 and 0.6 looks like best setting in this case.
+
+
+
+
+
+    \newpage
 
     \subsection{Performance}
     Other than learning and exploration, the implementation in C++ bring an edge of performance to be able to run
@@ -159,11 +229,6 @@
 
     \section{Conclusion}
 
-    A complex version can be done where the allocation is not done to the closest but also be learnt changing the
-    genome to a two pair set up and removing the nearest allocation mechanism. \cite{Capacitated_allo_Zorica}
-
-
-    parameters inspiration got from here: \cite{Zhou2016/09}
 
 
     \newpage
