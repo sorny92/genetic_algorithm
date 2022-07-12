@@ -165,6 +165,7 @@
         \label{fig:prob0}
     \end{figure}
 
+    \newline
     Depending on the probability values selected for crossover or mutation the speed to achieve an optimal solution
     will be different.
     As it can be seen in Figure~\ref{fig:prob0}, due to not being able to generate new different genomes
@@ -181,6 +182,7 @@
     and mutation probability is at the maximum the variability increases fast so the system is able to achieve a
     bigger variability of results.
 
+    \newline
     Another interesting observation in Figure~\ref{fig:prob1} is the different fitness values that are achieved based on
     the number of hubs.
     As it should be obvious the more hubs you have the more interconnected is the network so the lower the cost is.
@@ -193,6 +195,7 @@
         \label{fig:sweep_best}
     \end{figure}
 
+    \newline
     In Figure~\ref{fig:sweep_best} it can be seen that with a bigger value of probability the spread in the final
     results is bigger.
     This is due to the big changes that happen to the genome.
@@ -209,25 +212,55 @@
         \label{fig:sweep_avg}
     \end{figure}
 
+    \newline
     In Figure~\ref{fig:sweep_avg} We can observe that high probability values increase the variability and so it does
-    the average value so achieving an optimal result takes much longer.
+    the average value.
+    This means achieving an optimal result takes much longer.
+
     Based on the data, a probability of mutation around 0.2 is the best to achieve a fast optimal result.
     Then applying crossover with a probability between 0.4 and 0.6 looks like best setting in this case.
+    \newline
+
+    On Figure~\ref{fig:iters_to_optimal} it can be seen at high probabilities of mutation it usually takes less time to
+    achieve an
+    optimal solution.
+    It can also be observed that the higher ratio of success happens in the range of [0, 0.2] in probability.
+
+    It can also be observed that with higher crossover probability there is higher chances of finding an optimal
+    solution although this influence is not as strong as with setting a proper value of mutation.
+
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{iters_to_optimal}
+        \caption{Top graph shows the average number of iterations to achieve the optimal solution in each set of
+        hyper-parameters.
+        Bottom graph shows what percentage of run with the same set of hyper-parameters achieved in less than 1500
+        iterations a solution}
+        \label{fig:iters_to_optimal}
+    \end{figure}
 
 
+    Lastly in Figure~\ref{fig:iters_to_optimal_02} it can be seen than a mutation probability close to \(1/n\_genes\)
+    is the ideal value to achieve an optimal solution fast.
+    Also the increase of crossover probability helps to have higher success but not as important as the right value
+    for mutation probability.
 
-
+    \begin{figure}[h]
+        \includegraphics[width=\textwidth]{iters_to_optimal_02}
+        \caption{Same graph as Figure~\ref{fig:iters_to_optimal} but with a probability range of [0, 0.2] for
+        mutation and crossover}
+        \label{fig:iters_to_optimal_02}
+    \end{figure}
 
     \newpage
-
-    \subsection{Performance}
-    Other than learning and exploration, the implementation in C++ bring an edge of performance to be able to run
-    plenty of experiments.
-    This implementation has parallel run for the fitness calculation which in the machine used for this work provided
-    around x10 more performance.
-
-
     \section{Conclusion}
+    Implementing the algorithm from scratch allowed to understand better how genetic algorithms work.
+    Also implementing it in C++ brings an edge of performance to be able to run plenty of experiments.
+    This implementation has parallel run for the fitness calculation which in the machine used for this work provided
+    around x10 more performance compared to the single threaded version.
+
+    Having a right set of hyper-parameters in the genetic algorithm can help to accelerate finding an optimal solution.
+    In this case a probability of \(1/n\_genes\) for mutation operator and a probability close to 1 for the crossover
+    operator shows the best chances of finding an optimal solution in the fastest time.
 
 
 
